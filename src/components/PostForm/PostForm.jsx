@@ -1,13 +1,20 @@
-import { useGetPositionsQuery, useAddUserMutation } from '../../redux';
+import { useEffect, useState } from 'react';
+import { fetchPositions, postUser } from '../../services';
 import { Formik, Form } from 'formik';
 import './PostForm.scss';
 
 export default function PostForm() {
-  const { data, isLoading } = useGetPositionsQuery();
-  const [addUser, { isError }] = useAddUserMutation();
+  const [positions, setPositions] = useState();
 
-  if (isLoading) return <h2>Loading...</h2>;
-  if (isError) return <h2>Error</h2>;
+  useEffect(() => {
+    const asyncFetch = async () => {
+      const {
+        data: { positions },
+      } = await fetchPositions();
+      setPositions(positions);
+    };
+    asyncFetch();
+  }, []);
 
   return (
     <section className="post-form-section">
@@ -20,10 +27,8 @@ export default function PostForm() {
           position_id: '',
           photo: '',
         }}
-        onSubmit={async values => {
-          if (values) {
-            await addUser(values).unwrap();
-          }
+        onSubmit={(user, { resetForm }) => {
+          // postUser(user);
         }}
       >
         {formik => (
@@ -53,23 +58,23 @@ export default function PostForm() {
               value={formik.values.phone}
             />
             <h3>Select your position</h3>
-            {data.positions.map(({ id, name }) => (
-              <label key={id}>
-                <input
-                  type="radio"
-                  name="position_id"
-                  value={id}
-                  onChange={formik.handleChange}
-                />
-                {name}
-              </label>
-            ))}
+            {positions &&
+              positions.map(({ id, name }) => (
+                <label key={id}>
+                  <input
+                    type="radio"
+                    name="position_id"
+                    value={(formik.values.position_id = id)}
+                    onChange={formik.handleChange}
+                  />
+                  {name}
+                </label>
+              ))}
             <label>
               <input
                 id="photo"
                 name="photo"
-                value={formik.values.photo}
-                onChange={formik.handleChange}
+                onChange={e => (formik.values.photo = e.target.files[0])}
                 type="file"
               />
             </label>
