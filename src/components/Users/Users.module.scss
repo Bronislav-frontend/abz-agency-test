@@ -1,0 +1,40 @@
+.section {
+  background-color: #f8f8f8;
+  padding: 140px 16px;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 50px;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.card:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.img {
+  margin-bottom: 20px;
+  border-radius: 50%;
+}
+
+.name {
+  margin-bottom: 20px;
+}
+
+.button {
+  margin-top: 50px;
+  padding: 4px 18px;
+  background-color: #f4e041;
+  border-radius: 100px;
+  border-color: transparent;
+  height: 34px;
+}
