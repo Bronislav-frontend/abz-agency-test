@@ -1,4 +1,5 @@
 import s from './Hero.module.scss';
+import Link from 'react-scroll/modules/components/Link';
 
 export default function Hero() {
   return (
@@ -11,7 +12,9 @@ export default function Hero() {
         mind. They should also be excited to learn, as the world of Front-End
         Development keeps evolving.
       </p>
-      <button className={s.button}>Sign Up</button>
+      <Link className={s.link} to="post_form">
+        Sign Up
+      </Link>
     </section>
   );
 }

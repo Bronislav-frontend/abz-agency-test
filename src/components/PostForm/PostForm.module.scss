@@ -23,6 +23,32 @@
   background-color: #f8f8f8;
 }
 
+.input_invalid {
+  border-radius: 4px;
+  border: 2px solid #cb3d40;
+  width: 100%;
+  padding: 14px 16px;
+  background-color: #f8f8f8;
+  &:active,
+  &:focus {
+    border: 2px solid #cb3d40;
+    outline: none;
+  }
+}
+
+.input_invalid:not([value='']),
+.input_invalid:focus {
+  + .custom_placeholder {
+    transform: translateY(-133%);
+    font-size: 12px;
+    line-height: 1.17;
+    background-color: #f8f8f8;
+    padding: 0 4px;
+    transition: all 0.3s cubic-bezier(0.64, 0.57, 0.67, 1.53);
+    color: #cb3d40;
+  }
+}
+
 .file_name {
   position: absolute;
   left: 50%;
@@ -53,10 +79,6 @@
   }
 }
 
-.input_valid {
-  border-color: green;
-}
-
 .phone_example {
   margin-top: 4px;
   padding-left: 14px;
@@ -74,7 +96,6 @@
 }
 
 .photo_error_msg {
-  // margin-top: 4px;
   position: absolute;
   padding-top: 6px;
   padding-left: 14px;
@@ -129,7 +150,7 @@
   & + .radio {
     margin-top: 12px;
   }
-  input {
+  .position_input {
     display: none;
     & + span {
       display: inline-block;

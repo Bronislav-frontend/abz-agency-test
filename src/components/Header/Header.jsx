@@ -1,28 +1,34 @@
 import logoSvg from '../../images/logo.svg';
 import s from './Header.module.scss';
+import { Link } from 'react-scroll';
 
 export default function Header() {
-  function onclick(number) {
-    window.scrollTo({
-      behavior: 'smooth',
-      bottom: number,
-    });
-  }
-
   return (
     <header className={s.header}>
       <div className={s.container}>
         <img src={logoSvg} alt="logo" />
-        <ul className={s.nav_buttons_list}>
-          <li className={s.nav_buttons_item}>
-            <button className={s.button} onClick={onclick()}>
+        <ul className={s.nav_links_list}>
+          <li className={s.nav_link_item}>
+            <Link
+              className={s.link}
+              to="users"
+              spy={true}
+              smooth={true}
+              duration={750}
+            >
               Users
-            </button>
+            </Link>
           </li>
-          <li className={s.nav_buttons_item}>
-            <button className={s.button} onClick={onclick()}>
+          <li className={s.nav_links_item}>
+            <Link
+              className={s.link}
+              to="post_form"
+              spy={true}
+              smooth={true}
+              duration={750}
+            >
               Sign Up
-            </button>
+            </Link>
           </li>
         </ul>
       </div>

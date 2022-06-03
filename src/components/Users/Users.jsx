@@ -25,7 +25,7 @@ export default function Users() {
   };
 
   return (
-    <section className={s.section}>
+    <section id="users" className={s.section}>
       <h2 className={s.title}>Working with GET request</h2>
       <ul className={s.list}>
         {usersArray &&

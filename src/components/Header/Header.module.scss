@@ -9,20 +9,21 @@
   padding: 13px 16px;
 }
 
-.nav_buttons_list {
+.nav_links_list {
   display: flex;
 }
 
-.nav_buttons_item:last-child {
+.nav_links_item:last-child {
   margin-left: 10px;
 }
 
-.button {
+.link {
   background-color: #f4e041;
   border-radius: 100px;
-  border-color: transparent;
+  border: none;
   width: 100px;
   height: 34px;
+  padding: 4px 18px;
 }
 
 @media screen and (min-width: 768px) {

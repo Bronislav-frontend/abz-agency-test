@@ -3,12 +3,9 @@ import SuccessSignup from './SuccessSignup';
 import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import 'yup-phone';
 import s from './PostForm.module.scss';
 
-const phoneSchema = Yup.string().phone().required();
-phoneSchema.isValid('+380123456789');
-
+const phoneRegExp = /^[+]{1}380([0-9]{9})$/;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg'];
 
 const SignupSchema = Yup.object().shape({
@@ -17,12 +14,11 @@ const SignupSchema = Yup.object().shape({
     .max(60, 'Too Long!')
     .required('Name is required'),
   phone: Yup.string()
-    .phone(
-      'UA',
-      true,
+    .matches(
+      phoneRegExp,
       'Phone number should be like in this example : +38-XXX-XXX-XX-XX ',
     )
-    .required('Phone is required'),
+    .required('Phone number is required'),
   email: Yup.string()
     .email('Invalid email')
     .max(100, 'Too Long!')
@@ -65,7 +61,7 @@ export default function PostForm() {
   return (
     <>
       {!isUserSignupSuccess && (
-        <section className={s.section}>
+        <section id="post_form" className={s.section}>
           <h2 className={s.title}>Working with POST request</h2>
           <Formik
             initialValues={{
@@ -87,11 +83,8 @@ export default function PostForm() {
                     type="text"
                     onChange={formik.handleChange}
                     value={formik.values.name}
-                    className={s.input}
                     autoComplete="off"
-                    // example how to customize
-                    // className={formik.errors.name ? s.input_invalid : s.input_valid}
-                    // example how to customize
+                    className={formik.errors.name ? s.input_invalid : s.input}
                   />
                   <label htmlFor="name" className={s.custom_placeholder}>
                     Your name
@@ -107,7 +100,7 @@ export default function PostForm() {
                     type="text"
                     onChange={formik.handleChange}
                     value={formik.values.email}
-                    className={s.input}
+                    className={formik.errors.email ? s.input_invalid : s.input}
                     autoComplete="off"
                   />
                   <label htmlFor="email" className={s.custom_placeholder}>
@@ -124,7 +117,7 @@ export default function PostForm() {
                     type="text"
                     onChange={formik.handleChange}
                     value={formik.values.phone}
-                    className={s.input}
+                    className={formik.errors.phone ? s.input_invalid : s.input}
                     autoComplete="off"
                   />
                   <label htmlFor="phone" className={s.custom_placeholder}>
@@ -133,7 +126,11 @@ export default function PostForm() {
                   {formik.errors.phone ? (
                     <div className={s.error_msg}>{formik.errors.phone}</div>
                   ) : (
-                    <div className={s.phone_example}>+38 (XXX) XXX-XX-XX </div>
+                    !formik.dirty && (
+                      <div className={s.phone_example}>
+                        +38 (XXX) XXX-XX-XX{' '}
+                      </div>
+                    )
                   )}
                 </div>
                 <h3 className={s.position_title}>Select your position</h3>
