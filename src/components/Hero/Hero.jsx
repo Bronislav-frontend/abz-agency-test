@@ -12,7 +12,13 @@ export default function Hero() {
         mind. They should also be excited to learn, as the world of Front-End
         Development keeps evolving.
       </p>
-      <Link className={s.link} to="post_form">
+      <Link
+        className={s.link}
+        to="post_form"
+        spy={true}
+        smooth={true}
+        duration={750}
+      >
         Sign Up
       </Link>
     </section>
