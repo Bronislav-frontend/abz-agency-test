@@ -1,0 +1,45 @@
+.header {
+  background-color: #fff;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 13px 16px;
+}
+
+.nav_buttons_list {
+  display: flex;
+}
+
+.nav_buttons_item:last-child {
+  margin-left: 10px;
+}
+
+.button {
+  background-color: #f4e041;
+  border-radius: 100px;
+  border-color: transparent;
+  width: 100px;
+  height: 34px;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 13px 32px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    padding: 13px 60px;
+    max-width: 1170px;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .container {
+    padding: 13px 0;
+  }
+}

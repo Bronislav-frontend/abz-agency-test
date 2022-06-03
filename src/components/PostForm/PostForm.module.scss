@@ -11,7 +11,7 @@
 }
 
 .input_wrapper {
-  margin-bottom: 50px;
+  padding-bottom: 50px;
   position: relative;
 }
 
@@ -74,9 +74,9 @@
 }
 
 .photo_error_msg {
+  // margin-top: 4px;
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  padding-top: 6px;
   padding-left: 14px;
   font-size: 12px;
   line-height: 1.17;
@@ -93,6 +93,7 @@
 .position_wrapper {
   display: flex;
   flex-direction: column;
+  padding-bottom: 47px;
 }
 
 .position_label:not(:last-child) {
@@ -179,34 +180,65 @@
 
 .file_input {
   opacity: 0;
-  margin-top: 60px;
-  padding-top: 14px;
+  padding: 14px 16px;
 }
 
-.file_custom {
-  &::before {
-    content: 'Upload';
-    position: absolute;
-    padding: 14px 15px;
-    left: 16px;
-    bottom: 1px;
-    border: 1px solid black;
-    border-bottom-left-radius: 4px;
-    border-top-left-radius: 4px;
-  }
-
-  &::after {
-    content: 'Upload your photo';
-    position: absolute;
-    width: 220px;
-    padding: 14px 15px;
-    left: 100px;
-    bottom: 1px;
-    border: 1px solid #d0cfcf;
-    border-bottom-right-radius: 4px;
-    border-top-right-radius: 4px;
-    border-left: none;
-  }
+.download_wrapper {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
+.download_btn {
+  padding: 14px 16px;
+  border: 1px solid #000000de;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.download_txt {
+  width: 244px;
+  padding: 14px 16px;
+  border: 1px solid #d0cfcf;
+  color: #7e7e7e;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
 // styling input type file //
+
+@media screen and (min-width: 768px) {
+  .section {
+    padding: 0 32px 100px 32px;
+  }
+  .form {
+    padding-left: 160px;
+    padding-right: 160px;
+  }
+
+  .download_txt {
+    width: 296px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .section {
+    padding: 0 60px 100px 60px;
+    max-width: 1170px;
+    margin: 0 auto;
+  }
+  .form {
+    padding-left: 262px;
+    padding-right: 262px;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .section {
+    padding: 0 0 100px 0;
+  }
+  .form {
+    padding-left: 395px;
+    padding-right: 395px;
+  }
+}

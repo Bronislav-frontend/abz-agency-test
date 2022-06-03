@@ -9,6 +9,8 @@ import s from './PostForm.module.scss';
 const phoneSchema = Yup.string().phone().required();
 phoneSchema.isValid('+380123456789');
 
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg'];
+
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Too Short!')
@@ -26,11 +28,18 @@ const SignupSchema = Yup.object().shape({
     .max(100, 'Too Long!')
     .required('Email is required'),
   position_id: Yup.string().required('Position is required'),
-  photo: Yup.mixed().required('Photo is required'),
-  // .test('fileFormat', 'jpg/jpeg only', value => {
-  //   console.log(value);
-  //   return value && ['jpg/jpeg'].includes(value.type);
-  // }),
+  photo: Yup.mixed()
+    .required('Photo is required')
+    .test(
+      'fileSize',
+      'File size dhould not exceed 5MB',
+      value => value && value.size <= 5000000,
+    )
+    .test(
+      'fileType',
+      'Photo should be only .jpg or .jpeg formats',
+      value => value && SUPPORTED_FORMATS.includes(value.type),
+    ),
 });
 
 export default function PostForm() {
@@ -47,11 +56,11 @@ export default function PostForm() {
     asyncFetch();
   }, []);
 
-  // const handleSubmit = user => {
-  //   postUser(user).then(r => {
-  //     if (r.data.success) setIsUserSignupSuccess(true);
-  //   });
-  // }
+  const handleSubmit = user => {
+    postUser(user).then(r => {
+      if (r.data.success) setIsUserSignupSuccess(true);
+    });
+  };
 
   return (
     <>
@@ -67,16 +76,10 @@ export default function PostForm() {
               photo: '',
             }}
             validationSchema={SignupSchema}
-            onSubmit={user => {
-              postUser(user).then(r => {
-                if (r.data.success) setIsUserSignupSuccess(true);
-                console.log(r);
-              });
-            }}
+            onSubmit={handleSubmit}
           >
             {formik => (
-              <Form>
-                {/* {console.log(formik)} */}
+              <Form className={s.form}>
                 <div className={s.input_wrapper}>
                   <input
                     id="name"
@@ -158,19 +161,23 @@ export default function PostForm() {
                   <input
                     id="photo"
                     name="photo"
-                    onChange={e => (formik.values.photo = e.target.files[0])}
+                    onChange={e => {
+                      formik.setFieldValue('photo', e.target.files[0]);
+                    }}
                     type="file"
                     className={s.file_input}
                   />
-                  <span className={s.file_custom}></span>
+                  <div className={s.download_wrapper}>
+                    <span className={s.download_btn}>Upload</span>
+                    <span className={s.download_txt}>
+                      {formik.values.photo
+                        ? formik.values.photo.name
+                        : 'Upload your photo'}
+                    </span>
+                  </div>
                   {formik.errors.photo && (
                     <div className={s.photo_error_msg}>
                       {formik.errors.photo}
-                    </div>
-                  )}
-                  {formik.values.photo && (
-                    <div className={s.file_name}>
-                      {formik.values.photo.name}
                     </div>
                   )}
                 </label>
@@ -178,7 +185,7 @@ export default function PostForm() {
                   <button
                     type="submit"
                     className={s.button}
-                    disabled={!formik.isValid}
+                    disabled={!formik.dirty || !formik.isValid}
                   >
                     Sign up
                   </button>
@@ -188,7 +195,6 @@ export default function PostForm() {
           </Formik>
         </section>
       )}
-
       {isUserSignupSuccess && <SuccessSignup />}
     </>
   );

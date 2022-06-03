@@ -9,7 +9,7 @@ export default function SuccessSinup() {
         <img src={svg} alt="" />
       </section>
       <footer className={s.footer}>
-        <p>© abz.agency specially for the test task</p>
+        <p className={s.footer_txt}>© abz.agency specially for the test task</p>
       </footer>
     </>
   );

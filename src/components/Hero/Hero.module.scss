@@ -1,16 +1,10 @@
 .hero {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('../../images/bg.jpg');
+    url('../../images/bg.webp');
   background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
   padding: 40px 16px 70px 16px;
-  //   height: 650px;
-  //   padding: 164px 322px;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   flex-direction: column;
 }
 
 .title {
@@ -32,4 +26,27 @@
   border-color: transparent;
   width: 100px;
   height: 34px;
+}
+
+@media screen and (min-width: 768px) {
+  .hero {
+    padding: 88px 194px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .hero {
+    padding: 164px 322px;
+    max-width: 1170px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .hero {
+    padding: 164px 395px;
+    background: url('../../images/bg.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
 }
