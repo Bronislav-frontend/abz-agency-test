@@ -10,7 +10,7 @@ export default function Users() {
   useEffect(() => {
     const asyncFetch = async () => {
       const {
-        data: { total_pages, users, page },
+        data: { total_pages, users },
       } = await fetchUsers(currentPage);
       setUsersArray([...usersArray, ...users]);
       if (currentPage === total_pages) {

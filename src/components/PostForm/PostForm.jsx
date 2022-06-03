@@ -53,8 +53,8 @@ export default function PostForm() {
   }, []);
 
   const handleSubmit = user => {
-    postUser(user).then(r => {
-      if (r.data.success) setIsUserSignupSuccess(true);
+    postUser(user).then(({ data }) => {
+      if (data.success) setIsUserSignupSuccess(true);
     });
   };
 
@@ -74,23 +74,30 @@ export default function PostForm() {
             validationSchema={SignupSchema}
             onSubmit={handleSubmit}
           >
-            {formik => (
+            {({
+              handleChange,
+              values,
+              setFieldValue,
+              errors,
+              dirty,
+              isValid,
+            }) => (
               <Form className={s.form}>
                 <div className={s.input_wrapper}>
                   <input
                     id="name"
                     name="name"
                     type="text"
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
+                    onChange={handleChange}
+                    value={values.name}
                     autoComplete="off"
-                    className={formik.errors.name ? s.input_invalid : s.input}
+                    className={errors.name ? s.input_invalid : s.input}
                   />
                   <label htmlFor="name" className={s.custom_placeholder}>
                     Your name
                   </label>
-                  {formik.errors.name && (
-                    <div className={s.error_msg}>{formik.errors.name}</div>
+                  {errors.name && (
+                    <div className={s.error_msg}>{errors.name}</div>
                   )}
                 </div>
                 <div className={s.input_wrapper}>
@@ -98,16 +105,16 @@ export default function PostForm() {
                     id="email"
                     name="email"
                     type="text"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                    className={formik.errors.email ? s.input_invalid : s.input}
+                    onChange={handleChange}
+                    value={values.email}
+                    className={errors.email ? s.input_invalid : s.input}
                     autoComplete="off"
                   />
                   <label htmlFor="email" className={s.custom_placeholder}>
                     Email
                   </label>
-                  {formik.errors.email && (
-                    <div className={s.error_msg}>{formik.errors.email}</div>
+                  {errors.email && (
+                    <div className={s.error_msg}>{errors.email}</div>
                   )}
                 </div>
                 <div className={s.input_wrapper}>
@@ -115,18 +122,18 @@ export default function PostForm() {
                     id="phone"
                     name="phone"
                     type="text"
-                    onChange={formik.handleChange}
-                    value={formik.values.phone}
-                    className={formik.errors.phone ? s.input_invalid : s.input}
+                    onChange={handleChange}
+                    value={values.phone}
+                    className={errors.phone ? s.input_invalid : s.input}
                     autoComplete="off"
                   />
                   <label htmlFor="phone" className={s.custom_placeholder}>
                     Phone
                   </label>
-                  {formik.errors.phone ? (
-                    <div className={s.error_msg}>{formik.errors.phone}</div>
+                  {errors.phone ? (
+                    <div className={s.error_msg}>{errors.phone}</div>
                   ) : (
-                    !formik.dirty && (
+                    !dirty && (
                       <div className={s.phone_example}>
                         +38 (XXX) XXX-XX-XX{' '}
                       </div>
@@ -142,16 +149,14 @@ export default function PostForm() {
                           type="radio"
                           name="position_id"
                           value={id}
-                          onChange={formik.handleChange}
+                          onChange={handleChange}
                           className={s.position_input}
                         />
                         <span>{name}</span>
                       </label>
                     ))}
-                  {formik.errors.position_id && (
-                    <div className={s.error_msg}>
-                      {formik.errors.position_id}
-                    </div>
+                  {errors.position_id && (
+                    <div className={s.error_msg}>{errors.position_id}</div>
                   )}
                 </div>
                 <label className={s.file_label}>
@@ -159,7 +164,7 @@ export default function PostForm() {
                     id="photo"
                     name="photo"
                     onChange={e => {
-                      formik.setFieldValue('photo', e.target.files[0]);
+                      setFieldValue('photo', e.target.files[0]);
                     }}
                     type="file"
                     className={s.file_input}
@@ -167,22 +172,18 @@ export default function PostForm() {
                   <div className={s.download_wrapper}>
                     <span className={s.download_btn}>Upload</span>
                     <span className={s.download_txt}>
-                      {formik.values.photo
-                        ? formik.values.photo.name
-                        : 'Upload your photo'}
+                      {values.photo ? values.photo.name : 'Upload your photo'}
                     </span>
                   </div>
-                  {formik.errors.photo && (
-                    <div className={s.photo_error_msg}>
-                      {formik.errors.photo}
-                    </div>
+                  {errors.photo && (
+                    <div className={s.photo_error_msg}>{errors.photo}</div>
                   )}
                 </label>
                 <div className={s.button_wrapper}>
                   <button
                     type="submit"
                     className={s.button}
-                    disabled={!formik.dirty || !formik.isValid}
+                    disabled={!dirty || !isValid}
                   >
                     Sign up
                   </button>
