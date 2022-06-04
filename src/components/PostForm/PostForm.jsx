@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import s from './PostForm.module.scss';
+import { toast } from 'react-toastify';
 
 const phoneRegExp = /^[+]{1}380([0-9]{9})$/;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg'];
@@ -38,7 +39,7 @@ const SignupSchema = Yup.object().shape({
     ),
 });
 
-export default function PostForm() {
+export default function PostForm({ onSubmit }) {
   const [positions, setPositions] = useState();
   const [isUserSignupSuccess, setIsUserSignupSuccess] = useState(false);
 
@@ -54,7 +55,12 @@ export default function PostForm() {
 
   const handleSubmit = user => {
     postUser(user).then(({ data }) => {
-      if (data.success) setIsUserSignupSuccess(true);
+      if (data.success) {
+        setIsUserSignupSuccess(true);
+        onSubmit();
+      } else {
+        toast.warning(`${data.error}`);
+      }
     });
   };
 
