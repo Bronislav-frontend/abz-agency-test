@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { fetchUsers } from '../../services';
-import { toast } from 'react-toastify';
 import Header from '../Header';
 import Hero from '../Hero';
 import Users from '../Users';
 import PostForm from '../PostForm';
+import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
