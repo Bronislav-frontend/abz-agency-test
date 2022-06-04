@@ -39,7 +39,11 @@ const SignupSchema = Yup.object().shape({
     ),
 });
 
-export default function PostForm({ onSubmit }) {
+export default function PostForm({
+  onSubmitSuccess,
+  setIsLoading,
+  isDisabled,
+}) {
   const [positions, setPositions] = useState();
   const [isUserSignupSuccess, setIsUserSignupSuccess] = useState(false);
 
@@ -53,15 +57,18 @@ export default function PostForm({ onSubmit }) {
     asyncFetch();
   }, []);
 
-  const handleSubmit = user => {
-    postUser(user).then(({ data }) => {
+  const handleSubmit = async user => {
+    setIsLoading(true);
+    try {
+      const { data } = await postUser(user);
       if (data.success) {
         setIsUserSignupSuccess(true);
-        onSubmit();
-      } else {
-        toast.warning(`${data.error}`);
+        onSubmitSuccess();
       }
-    });
+    } catch (error) {
+      toast.error(`${error.response.data.message}`);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -158,7 +165,7 @@ export default function PostForm({ onSubmit }) {
                           onChange={handleChange}
                           className={s.position_input}
                         />
-                        <span>{name}</span>
+                        <span className={s.position_name}>{name}</span>
                       </label>
                     ))}
                   {errors.position_id && (
@@ -189,7 +196,7 @@ export default function PostForm({ onSubmit }) {
                   <button
                     type="submit"
                     className={s.button}
-                    disabled={!dirty || !isValid}
+                    disabled={!dirty || !isValid || isDisabled}
                   >
                     Sign up
                   </button>

@@ -6,7 +6,9 @@ export default function Header({ isPostForm }) {
   return (
     <header className={s.header}>
       <div className={s.container}>
-        <img src={logoSvg} alt="logo" />
+        <a href="/">
+          <img src={logoSvg} alt="logo" />
+        </a>
         <ul className={s.nav_links_list}>
           <li className={s.nav_link_item}>
             <Link className={s.link} to="users" smooth={true} duration={750}>
