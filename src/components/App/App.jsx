@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fetchUsers } from '../../services';
+import { toast } from 'react-toastify';
 import Header from '../Header';
 import Hero from '../Hero';
 import Users from '../Users';
@@ -9,25 +10,35 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   const [usersArray, setUsersArray] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [nextPage, setNextPage] = useState('');
   const [isHidden, setIsHidden] = useState(false);
   const [isSignupSuccess, setIsSignupSuccess] = useState(false);
 
   useEffect(() => {
     const asyncFetch = async () => {
       const {
-        data: { total_pages, users },
-      } = await fetchUsers(currentPage);
-      setUsersArray([...usersArray, ...users]);
-      if (currentPage === total_pages) {
-        setIsHidden(true);
-      }
+        data: { users, links },
+      } = await fetchUsers(1);
+      setUsersArray(users);
+      setNextPage(links.next_url);
     };
     asyncFetch();
-  }, [currentPage, isSignupSuccess]);
+  }, [isSignupSuccess]);
+
+  async function fetchNextPage() {
+    try {
+      const response = await fetch(nextPage);
+      const { users, links, page, total_pages } = await response.json();
+      setUsersArray([...usersArray, ...users]);
+      setNextPage(links.next_url);
+      if (page === total_pages) setIsHidden(true);
+    } catch (error) {
+      return toast.warning(`Ooops, something went wrong:${error}`);
+    }
+  }
 
   const handleClick = () => {
-    setCurrentPage(currentPage + 1);
+    fetchNextPage();
   };
 
   const onSuccessSubmit = () => {
@@ -36,7 +47,7 @@ export default function App() {
 
   return (
     <>
-      <Header />
+      <Header isPostForm={isSignupSuccess} />
       <Hero />
       {usersArray && (
         <Users users={usersArray} onClick={handleClick} isHidden={isHidden} />
