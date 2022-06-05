@@ -1,3 +1,5 @@
+@import '../../scss/variables.module';
+
 .section {
   padding: 0 16px 100px 16px;
 }
@@ -17,17 +19,17 @@
 
 .input {
   border-radius: 4px;
-  border: 1px solid #d0cfcf;
+  border: $inputs-border;
   width: 100%;
   padding: 14px 16px;
-  background-color: #f8f8f8;
+  background-color: $background-color;
   &:not([value='']),
   &:focus {
     + .custom_placeholder {
       transform: translateY(-133%);
       font-size: 12px;
       line-height: 1.17;
-      background-color: #f8f8f8;
+      background-color: $background-color;
       padding: 0 4px;
       transition: all 0.3s cubic-bezier(0.64, 0.57, 0.67, 1.53);
     }
@@ -36,13 +38,13 @@
 
 .input_invalid {
   border-radius: 4px;
-  border: 2px solid #cb3d40;
+  border: 1px solid $error-color;
   width: 100%;
   padding: 14px 16px;
-  background-color: #f8f8f8;
+  background-color: $background-color;
   &:active,
   &:focus {
-    border: 2px solid #cb3d40;
+    border: 1px solid $error-color;
     outline: none;
   }
   &:not([value='']),
@@ -51,10 +53,10 @@
       transform: translateY(-133%);
       font-size: 12px;
       line-height: 1.17;
-      background-color: #f8f8f8;
+      background-color: $background-color;
       padding: 0 4px;
       transition: all 0.3s cubic-bezier(0.64, 0.57, 0.67, 1.53);
-      color: #cb3d40;
+      color: $error-color;
     }
   }
 }
@@ -63,7 +65,7 @@
   position: absolute;
   left: 5%;
   top: 12px;
-  color: #7e7e7e;
+  color: $placeholder-color;
   transition: all 0.25s cubic-bezier(0.64, 0.57, 0.67, 1.53);
 }
 
@@ -72,7 +74,7 @@
   padding-left: 14px;
   font-size: 12px;
   line-height: 1.17;
-  color: #7e7e7e;
+  color: $placeholder-color;
 }
 
 .error_msg {
@@ -80,7 +82,7 @@
   padding-left: 14px;
   font-size: 12px;
   line-height: 1.17;
-  color: #cb3d40;
+  color: $error-color;
 }
 
 .photo_error_msg {
@@ -89,7 +91,7 @@
   padding-left: 14px;
   font-size: 12px;
   line-height: 1.17;
-  color: #cb3d40;
+  color: $error-color;
 }
 
 .position_title {
@@ -116,16 +118,18 @@
 .button {
   margin-top: 55px;
   padding: 4px 18px;
-  background-color: #f4e041;
+  background-color: $primary-color;
   border-radius: 100px;
   border-color: transparent;
   height: 34px;
+  filter: $btns-drop-shadow;
   &:disabled {
-    background-color: #b4b4b4;
-    color: #ffffff;
+    background-color: $disabled-btn-color;
+    color: $additional-color;
     cursor: default;
+    filter: none;
   }
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
   &:hover {
     filter: none;
   }
@@ -157,15 +161,15 @@
         margin-right: 5px;
         width: 20px;
         height: 20px;
-        border: 1px solid #00bdd3;
-        background: #fff;
+        border: 1px solid $secondary-color;
+        background: $additional-color;
       }
       &:after {
         content: '';
         display: block;
         width: 10px;
         height: 10px;
-        background: #00bdd3;
+        background: $secondary-color;
         position: absolute;
         border-radius: 50%;
         top: 8px;
@@ -202,7 +206,7 @@
   padding: 14px;
   font-size: 20px;
   line-height: 1.17;
-  color: #7e7e7e;
+  color: $placeholder-color;
 }
 
 .download_wrapper {
@@ -223,14 +227,14 @@
 .download_txt {
   width: 244px;
   padding: 14px 16px;
-  border: 1px solid #d0cfcf;
-  color: #7e7e7e;
+  border: $inputs-border;
+  color: $placeholder-color;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
 // styling input type file //
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: $tablet) {
   .section {
     padding: 0 32px 100px 32px;
   }
@@ -244,7 +248,7 @@
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: $desktop) {
   .section {
     padding: 0 60px 100px 60px;
     max-width: 1170px;
@@ -256,7 +260,7 @@
   }
 }
 
-@media screen and (min-width: 2560px) {
+@media screen and (min-width: $desktop-2k) {
   .section {
     padding: 0 0 100px 0;
   }
