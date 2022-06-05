@@ -16,6 +16,9 @@ export default function Users({ users, onClick, isHidden, isLoading }) {
                   src={user.photo ? user.photo : defaultProfilePhoto}
                   alt=""
                   className={s.img}
+                  width="70px"
+                  height="70px"
+                  loading="lazy"
                 />
                 <Tippy content={user.name} placement="bottom">
                   <p className={s.name} data-tip={user.name}>

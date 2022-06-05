@@ -1,7 +1,7 @@
-@import '../../scss/variables.module';
+@import '../../scss/variables';
 .hero {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('../../images/bg1.webp');
+    url('../../images/mobilebg.webp');
   background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
@@ -45,13 +45,17 @@
     padding: 164px 322px;
     max-width: 1170px;
     margin: 0 auto;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('../../images/bgdesktop.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 }
 
 @media screen and (min-width: $desktop-2k) {
   .hero {
     padding: 164px 395px;
-    background: url('../../images/bg1.webp');
+    background: url('../../images/bgdesktop.webp');
     background-size: cover;
     background-repeat: no-repeat;
   }
