@@ -1,5 +1,7 @@
 import { fetchPositions, postUser } from '../../services';
 import SuccessSignup from './SuccessSignup';
+import Input from './Input';
+import RadioButtons from './RadioButtons/';
 import { SignupSchema } from './Yup.schema';
 import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
@@ -63,82 +65,38 @@ export default function PostForm({
               isValid,
             }) => (
               <Form className={s.form}>
-                <div className={s.input_wrapper}>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    onChange={handleChange}
-                    value={values.name}
-                    autoComplete="off"
-                    className={errors.name ? s.input_invalid : s.input}
-                  />
-                  <label htmlFor="name" className={s.custom_placeholder}>
-                    Your name
-                  </label>
-                  {errors.name && (
-                    <div className={s.error_msg}>{errors.name}</div>
-                  )}
-                </div>
-                <div className={s.input_wrapper}>
-                  <input
-                    id="email"
-                    name="email"
-                    type="text"
-                    onChange={handleChange}
-                    value={values.email}
-                    className={errors.email ? s.input_invalid : s.input}
-                    autoComplete="off"
-                  />
-                  <label htmlFor="email" className={s.custom_placeholder}>
-                    Email
-                  </label>
-                  {errors.email && (
-                    <div className={s.error_msg}>{errors.email}</div>
-                  )}
-                </div>
-                <div className={s.input_wrapper}>
-                  <input
-                    id="phone"
-                    name="phone"
-                    type="text"
-                    onChange={handleChange}
-                    value={values.phone}
-                    className={errors.phone ? s.input_invalid : s.input}
-                    autoComplete="off"
-                  />
-                  <label htmlFor="phone" className={s.custom_placeholder}>
-                    Phone
-                  </label>
-                  {errors.phone ? (
-                    <div className={s.error_msg}>{errors.phone}</div>
-                  ) : (
-                    !dirty && (
-                      <div className={s.phone_example}>
-                        +38 (XXX) XXX-XX-XX{' '}
-                      </div>
-                    )
-                  )}
-                </div>
+                <Input
+                  name="name"
+                  onChange={handleChange}
+                  value={values.name}
+                  error={errors.name}
+                  labelText="Your name"
+                />
+                <Input
+                  name="email"
+                  onChange={handleChange}
+                  value={values.email}
+                  error={errors.email}
+                  labelText="Email"
+                />
+                <Input
+                  name="phone"
+                  onChange={handleChange}
+                  value={values.phone}
+                  error={errors.phone}
+                  labelText="Phone"
+                />
+                {!dirty && !errors.phone && (
+                  <div className={s.phone_example}>+38 (XXX) XXX-XX-XX</div>
+                )}
                 <h3 className={s.position_title}>Select your position</h3>
-                <div className={s.position_wrapper}>
-                  {positions &&
-                    positions.map(({ id, name }) => (
-                      <label key={id} className={s.position_label}>
-                        <input
-                          type="radio"
-                          name="position_id"
-                          value={id}
-                          onChange={handleChange}
-                          className={s.position_input}
-                        />
-                        <span className={s.position_name}>{name}</span>
-                      </label>
-                    ))}
-                  {errors.position_id && (
-                    <div className={s.error_msg}>{errors.position_id}</div>
-                  )}
-                </div>
+                {positions && (
+                  <RadioButtons
+                    positions={positions}
+                    onChange={handleChange}
+                    error={errors.position_id}
+                  />
+                )}
                 <label className={s.file_label}>
                   <input
                     id="photo"
